@@ -2,10 +2,6 @@ package com.example;
 
 import java.util.stream.Stream;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -43,7 +39,7 @@ class DataGenerator implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		Stream.of("Beer").map(str -> new Beverage(str, 5.5d)).forEach(repo::save);
+		Stream.of("Beer", "Cider").map(str -> new Beverage(str, 5.5d)).forEach(repo::save);
 	}
 
 }
@@ -101,45 +97,6 @@ class MyUI extends UI {
 		setContent(horizontalLayout);
 	}
 
-}
-
-@Entity
-class Beverage {
-
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	private String beverageName;
-	private double alcoholContent;
-
-	public Beverage() { // JPA..
-	}
-
-	public Beverage(String name, double alc) {
-		beverageName = name;
-		alcoholContent = alc;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getBeverageName() {
-		return beverageName;
-	}
-
-	public void setBeverageName(String beverageName) {
-		this.beverageName = beverageName;
-	}
-
-	public double getAlcoholContent() {
-		return alcoholContent;
-	}
-
-	public void setAlcoholContent(double alcoholContent) {
-		this.alcoholContent = alcoholContent;
-	}
 }
 
 interface BeverageRepository extends JpaRepository<Beverage, Long> {
